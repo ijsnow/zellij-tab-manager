@@ -1,0 +1,16 @@
+[package]
+name = "zellij-tab-manager"
+version = "0.1.0"
+authors = ["Isaac Snow <isaacjsnow@gmail.com>"]
+edition = "2021"
+license = "MIT"
+
+[dependencies]
+colored = "2"
+miette = "5.9.0"
+regex = "1.8.4"
+serde = { version = "1.0.164", features = ["derive"] }
+strsim = "0.10.0"
+term = "0.7.0"
+thiserror = "1.0.40"
+zellij-tile = { version = "0.37.2" }

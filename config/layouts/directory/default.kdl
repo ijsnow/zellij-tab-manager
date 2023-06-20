@@ -1,0 +1,16 @@
+layout {
+    cwd "~/Development/$name"
+
+    tab name="$name" {
+        pane stacked=true {
+            pane focus=true {
+                command "rtx"
+                args "x" "nodejs@lts-hydrogen" "--" "nvim"
+            }
+            pane
+        }
+        pane size=2 borderless=true {
+            plugin location="zellij:status-bar"
+        }
+    }
+}

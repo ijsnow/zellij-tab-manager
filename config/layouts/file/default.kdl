@@ -1,0 +1,5 @@
+layout {
+  tab {
+    pane edit="~/Development/$path"
+  }
+}
