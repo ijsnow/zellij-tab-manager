@@ -36,6 +36,10 @@ The plugin assumes the directory you cloned the directory to is a directory you 
   a. A future todo would be to make this compatible. Maybe assuming you start zellij from `$HOME` you can change `cwd` to whatever.
 2. It looks for `/host/zellij-tab-manager/config/layouts/tab/default.kdl` for a layout template file. It currently supports replacement of `$name` with the name of the selected directory.
 
+### Usage
+
+To move the selection up or down in the list use ctrl+p/ctrl+n/up arrow/down arrow. To open or switch to the selected entry press enter. To close, click outside or press ctrl+c.
+
 ## Problems/Questions
 
 1. What directory is `/data` mapped to? Thought it would be `~/.config/zellij/plugins/zellij-tab-manager/` for the location described above.
