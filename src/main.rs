@@ -1,6 +1,6 @@
 use std::fs::DirEntry;
 
-use ::{colored::*, regex::Regex, zellij_tile::prelude::*};
+use {colored::*, regex::Regex, zellij_tile::prelude::*};
 
 #[derive(Default)]
 struct State {
