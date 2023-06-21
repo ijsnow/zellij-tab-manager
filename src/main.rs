@@ -39,7 +39,10 @@ impl ZellijPlugin for State {
 
     fn update(&mut self, event: Event) -> bool {
         let mut should_render = false;
-        let mut should_sort = false;
+
+        eprintln!("{:?}", event);
+
+        let prompt = self.prompt.clone();
 
         match event {
             Event::TabUpdate(tabs) => {
@@ -90,13 +93,11 @@ impl ZellijPlugin for State {
                     self.prompt.push(input);
                     self.selected_index = 0;
 
-                    should_sort = true;
                     should_render = true;
                 }
                 Key::Backspace => {
                     self.prompt.pop();
 
-                    should_sort = true;
                     should_render = true;
                 }
                 _ => {}
@@ -106,11 +107,12 @@ impl ZellijPlugin for State {
             }
         }
 
-        if should_sort {
+        if prompt != self.prompt {
             if let Err(error) = self.sort_directory_entries() {
                 self.error = Some(error);
-                should_render = true;
             }
+
+            should_render = true;
         }
 
         should_render
@@ -149,10 +151,12 @@ impl ZellijPlugin for State {
 
                 columns -= name.len();
 
-                let line = format!(" {} {}", arrow_or_space, name);
+                let score = format!("{:.5}", 1.0 - strsim::jaro_winkler(&self.prompt, &name));
+
+                let line = format!(" {} {} {}", arrow_or_space, name, score.dimmed());
 
                 if index == self.selected_index {
-                    let rest_of_line = format!("{fill:width$}", fill = " ", width = columns);
+                    let rest_of_line = format!("{fill:width$}", fill = " ", width = columns - 1 - score.len());
 
                     format!("{}{}\n", line.reversed(), rest_of_line.reversed())
                 } else {
@@ -175,6 +179,8 @@ impl State {
 
         let re = Regex::new(r"[$]name").unwrap();
         let tab_kdl = re.replace_all(&content, name);
+
+        eprintln!("{}: {:?}", name, tab_kdl);
 
         new_tabs_with_layout(&tab_kdl);
 
